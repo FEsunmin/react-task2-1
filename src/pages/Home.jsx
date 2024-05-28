@@ -24,7 +24,7 @@ const Home = () => {
       );
     });
 
-    return filteredData.sort((a, b) => new Date(a.date) - new Date(b.date)); // 날짜 순으로 정렬
+    return filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
   };
 
   const handlPageClick = (detailId) => {
