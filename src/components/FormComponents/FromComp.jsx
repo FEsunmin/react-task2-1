@@ -22,6 +22,7 @@ const BtnStyle = styled.button`
   width: 100px;
   height: 36px;
   margin-top: 20px;
+  cursor: pointer;
 `;
 
 const TitleStyle = styled.label`

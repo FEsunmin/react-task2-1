@@ -9,6 +9,7 @@ const Item = styled.div`
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const ItemDetails = styled.div`
