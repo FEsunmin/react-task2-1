@@ -1,44 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import ListContainer from "../components/ListComponents/ListContainer";
 import BoxContainer from "../components/BoxComponents/BoxContainer";
 import FromComp from "../components/FormComponents/FromComp";
 import { useNavigate } from "react-router-dom";
+import { ExpenseContext } from "../contexts/ExpenseContext";
 
 const Home = () => {
-  const [boxIndex, setBoxIndex] = useState(() => {
-    const storedIndex = localStorage.getItem("selectedMonth");
-    return storedIndex !== null && !isNaN(parseInt(storedIndex, 10))
-      ? parseInt(storedIndex, 10)
-      : 0;
-  });
-
-  const [expenses, setExpenses] = useState(() => {
-    const storedExpenses = localStorage.getItem("expenses");
-    return storedExpenses ? JSON.parse(storedExpenses) : [];
-  });
-
+  const { boxIndex, setBoxIndex, expenses, addExpense } =
+    useContext(ExpenseContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem("selectedMonth", boxIndex.toString());
-  }, [boxIndex]);
-
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-  }, [expenses]);
 
   const handleClick = (index) => {
     setBoxIndex(index);
   };
-
-  const addExpense = (expense) => {
-    setExpenses((prevExpenses) => [...prevExpenses, expense]);
-  };
-
-  const boxData = Array.from({ length: 12 }, (_, index) => ({
-    title: `${index + 1}월`,
-    index,
-  }));
 
   const getFilteredData = (boxIndex) => {
     const year = 2024;
@@ -49,7 +23,8 @@ const Home = () => {
         itemDate.getFullYear() === year && itemDate.getMonth() + 1 === month
       );
     });
-    return filteredData;
+
+    return filteredData.sort((a, b) => new Date(a.date) - new Date(b.date)); // 날짜 순으로 정렬
   };
 
   const handlPageClick = (detailId) => {
@@ -60,7 +35,10 @@ const Home = () => {
     <>
       <FromComp onAddExpense={addExpense} />
       <BoxContainer
-        boxData={boxData}
+        boxData={Array.from({ length: 12 }, (_, index) => ({
+          title: `${index + 1}월`,
+          index,
+        }))}
         boxIndex={boxIndex}
         handleClick={handleClick}
       />

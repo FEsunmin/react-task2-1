@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
 
 const Frame = styled.div`
@@ -72,44 +71,18 @@ const Button = styled.button`
   margin-right: 20px;
 `;
 
-const DetailComp = ({ detailExpense }) => {
-  const navigate = useNavigate();
-
-  const dateRef = useRef(detailExpense.date);
-  const itemRef = useRef(detailExpense.item);
-  const amountRef = useRef(detailExpense.amount);
-  const descriptionRef = useRef(detailExpense.description);
-
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleUpdate = () => {
-    const updatedExpense = {
-      ...detailExpense,
-      date: dateRef.current.value,
-      item: itemRef.current.value,
-      amount: parseFloat(amountRef.current.value),
-      description: descriptionRef.current.value,
-    };
-
-    const updatedExpenses = JSON.parse(localStorage.getItem("expenses")).map(
-      (expense) => (expense.id === updatedExpense.id ? updatedExpense : expense)
-    );
-    localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
-
-    navigate("/");
-  };
-
-  const handleDelete = () => {
-    if (window.confirm("정말 이 지출 항목을 삭제하시겠습니까?")) {
-      const updatedExpenses = JSON.parse(
-        localStorage.getItem("expenses")
-      ).filter((expense) => expense.id !== detailExpense.id);
-      localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
-
-      navigate("/");
-    }
-  };
-
+const DetailComp = ({
+  detailExpense,
+  isEditing,
+  setIsEditing,
+  dateRef,
+  itemRef,
+  amountRef,
+  descriptionRef,
+  handleUpdate,
+  handleDelete,
+  navigate,
+}) => {
   return (
     <Frame>
       <Content>
