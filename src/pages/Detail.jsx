@@ -1,12 +1,14 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import DetailComp from "../components/DetailComponent/DetailComp";
-import { ExpenseContext } from "../contexts/ExpenseContext";
+import { updateExpense, deleteExpense } from "../store/expenseSlice";
 
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { expenses, updateExpense, deleteExpense } = useContext(ExpenseContext);
+  const expenses = useSelector((state) => state.expenses.expenses);
+  const dispatch = useDispatch();
   const detailExpense = expenses.find((item) => item.id === id);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -24,13 +26,13 @@ const Detail = () => {
       amount: amountRef.current.value,
       description: descriptionRef.current.value,
     };
-    updateExpense(updatedExpense);
+    dispatch(updateExpense(updatedExpense));
     navigate("/");
   };
 
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
-      deleteExpense(detailExpense.id);
+      dispatch(deleteExpense(detailExpense.id));
       navigate("/");
     }
   };

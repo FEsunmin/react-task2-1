@@ -1,17 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import ListContainer from "../components/ListComponents/ListContainer";
 import BoxContainer from "../components/BoxComponents/BoxContainer";
 import FromComp from "../components/FormComponents/FromComp";
 import { useNavigate } from "react-router-dom";
-import { ExpenseContext } from "../contexts/ExpenseContext";
+import { setBoxIndex, addExpense } from "../store/expenseSlice";
 
 const Home = () => {
-  const { boxIndex, setBoxIndex, expenses, addExpense } =
-    useContext(ExpenseContext);
+  const boxIndex = useSelector((state) => state.expenses.boxIndex);
+  const expenses = useSelector((state) => state.expenses.expenses);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClick = (index) => {
-    setBoxIndex(index);
+    dispatch(setBoxIndex(index));
   };
 
   const getFilteredData = (boxIndex) => {
@@ -27,13 +29,13 @@ const Home = () => {
     return filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
   };
 
-  const handlPageClick = (detailId) => {
+  const handlePageClick = (detailId) => {
     navigate(`/detail/${detailId}`);
   };
 
   return (
     <>
-      <FromComp onAddExpense={addExpense} />
+      <FromComp onAddExpense={(expense) => dispatch(addExpense(expense))} />
       <BoxContainer
         boxData={Array.from({ length: 12 }, (_, index) => ({
           title: `${index + 1}월`,
@@ -44,7 +46,7 @@ const Home = () => {
       />
       <ListContainer
         data={getFilteredData(boxIndex)}
-        onExpenseClick={handlPageClick}
+        onExpenseClick={handlePageClick}
       />
     </>
   );
