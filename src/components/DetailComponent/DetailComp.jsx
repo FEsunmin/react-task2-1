@@ -58,7 +58,6 @@ const BtnFrame = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid;
 `;
 
 const Button = styled.button`
@@ -69,6 +68,7 @@ const Button = styled.button`
   justify-content: center;
   border: 1px solid;
   margin-right: 20px;
+  cursor: pointer;
 `;
 
 const DetailComp = ({
