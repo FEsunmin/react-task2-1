@@ -136,7 +136,7 @@ const DetailComp = ({
             <Button onClick={() => setIsEditing(true)}>수정</Button>
           )}
           <Button onClick={handleDelete}>삭제</Button>
-          <Button onClick={() => navigate("/")}>뒤로가기</Button>
+          <Button onClick={() => navigate(-1)}>뒤로가기</Button>
         </BtnFrame>
       </Content>
     </Frame>

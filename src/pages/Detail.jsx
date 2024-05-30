@@ -27,13 +27,13 @@ const Detail = () => {
       description: descriptionRef.current.value,
     };
     dispatch(updateExpense(updatedExpense));
-    navigate("/");
+    navigate(-1);
   };
 
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       dispatch(deleteExpense(detailExpense.id));
-      navigate("/");
+      navigate(-1);
     }
   };
 
