@@ -96,7 +96,7 @@ const DetailComp = ({ detailExpense }) => {
     );
     localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
 
-    navigate("/");
+    navigate(-1);
   };
 
   const handleDelete = () => {
@@ -106,7 +106,7 @@ const DetailComp = ({ detailExpense }) => {
       ).filter((expense) => expense.id !== detailExpense.id);
       localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
 
-      navigate("/");
+      navigate(-1);
     }
   };
 
@@ -163,7 +163,7 @@ const DetailComp = ({ detailExpense }) => {
             <Button onClick={() => setIsEditing(true)}>수정</Button>
           )}
           <Button onClick={handleDelete}>삭제</Button>
-          <Button onClick={() => navigate("/")}>뒤로가기</Button>
+          <Button onClick={() => navigate(-1)}>뒤로가기</Button>
         </BtnFrame>
       </Content>
     </Frame>
